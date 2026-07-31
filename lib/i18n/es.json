@@ -1,0 +1,23 @@
+{
+  "login": {
+    "title": "SOFTNET",
+    "subtitle": "Iniciá sesión para continuar",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@correo.com",
+    "passwordLabel": "Contraseña",
+    "submitButton": "Iniciar sesión",
+    "loadingButton": "Cargando...",
+    "footer": "Todos los derechos reservados",
+    "successMessage": "Bienvenido de nuevo",
+    "errorInvalidCredentials": "Correo o contraseña incorrectos",
+    "errorEmptyFields": "Completá todos los campos",
+    "errorInvalidEmail": "El correo no tiene un formato válido"
+  },
+  "logout": {
+    "button": "Cerrar sesión",
+    "loadingButton": "Cerrando sesión..."
+  },
+  "common": {
+    "loading": "Cargando"
+  }
+}
