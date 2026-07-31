@@ -1,0 +1,23 @@
+{
+  "login": {
+    "title": "SOFTNET",
+    "subtitle": "Log in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "submitButton": "Log in",
+    "loadingButton": "Loading...",
+    "footer": "All rights reserved",
+    "successMessage": "Welcome back",
+    "errorInvalidCredentials": "Invalid email or password",
+    "errorEmptyFields": "Please fill in all fields",
+    "errorInvalidEmail": "Invalid email format"
+  },
+  "logout": {
+    "button": "Log out",
+    "loadingButton": "Logging out..."
+  },
+  "common": {
+    "loading": "Loading"
+  }
+}
