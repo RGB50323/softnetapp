@@ -90,6 +90,15 @@
     "sectionInventory": "Inventory and pricing",
     "cancel": "Cancel",
     "errorDuplicateSku": "SKU already exists, choose another one",
-    "errorPastDate": "The expiration date cannot be earlier than today"
+    "errorPastDate": "The expiration date cannot be earlier than today",
+    "editTitle": "Edit product",
+    "newTitle": "New product"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "totalSkus": "actives SKUs",
+    "totalInventoryValue": "Total inventory value",
+    "expiringSoon": "Expiring soon",
+    "chartTitle": "Inventory value by category"
   }
 }
