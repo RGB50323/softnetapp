@@ -11,6 +11,12 @@ import { Dropdown } from "@/components/ui/dropdown";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { StatusBadge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Modal } from "@/components/ui/modal";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface ProductsTableProps {
   initialProducts: Product[];
@@ -23,6 +29,9 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
   const [statusFilter, setStatusFilter] = useState<ProductStatus | "all">(
     "all",
   );
+  const router = useRouter();
+  const [skuToDelete, setSkuToDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   // Translated labels for each status, used both in the dropdown options and the table badges
   const statusLabels: Record<ProductStatus, string> = {
@@ -77,6 +86,27 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
     setCategoryFilter("all");
     setStatusFilter("all");
     setCurrentPage(1);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!skuToDelete) return;
+    setDeleting(true);
+
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("products")
+      .delete()
+      .eq("sku", skuToDelete);
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(t("products.deleteSuccess"));
+      router.refresh();
+    }
+
+    setDeleting(false);
+    setSkuToDelete(null);
   };
 
   return (
@@ -183,6 +213,9 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
               <th className="text-left px-4 py-3 font-semibold">
                 {t("products.columns.status")}
               </th>
+              <th className="text-center px-4 py-3 font-semibold">
+                {t("products.columns.actions")}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -204,10 +237,7 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
                 return (
                   <tr
                     key={product.id}
-                    className="border-t border-slate-100 hover:bg-slate-50 cursor-pointer"
-                    onClick={() =>
-                      (window.location.href = `/products/${product.sku}`)
-                    }
+                    className="border-t border-slate-100 hover:bg-slate-50"
                   >
                     <td className="px-4 py-3 font-medium">{product.sku}</td>
                     <td className="px-4 py-3">{product.name}</td>
@@ -227,6 +257,30 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
                         status={status}
                         label={statusLabels[status]}
                       />
+                    </td>
+                    <td className="px-4 py-3 text-center flex gap-2 justify-center">
+                      <Link
+                        href={`/products/${product.sku}`}
+                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-600 transition-colors"
+                        aria-label={t("products.viewDetail")}
+                      >
+                        <Eye size={18} />
+                      </Link>
+                      <Link
+                        href={`/products/${product.sku}/edit`}
+                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-600 transition-colors"
+                        aria-label={t("products.editProduct")}
+                      >
+                        <Pencil size={18} />
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setSkuToDelete(product.sku)}
+                        className="cursor-pointer inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-red-100 text-red-600 transition-colors"
+                        aria-label={t("products.deleteProduct")}
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </td>
                   </tr>
                 );
@@ -265,6 +319,16 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
           </div>
         </div>
       )}
+      <Modal
+        open={skuToDelete !== null}
+        title={t("products.deleteProduct")}
+        description={t("products.confirmDelete")}
+        confirmLabel={t("products.deleteConfirmButton")}
+        cancelLabel={t("productForm.cancel")}
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setSkuToDelete(null)}
+        loading={deleting}
+      />
     </div>
   );
 }
