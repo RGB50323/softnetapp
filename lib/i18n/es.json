@@ -1,0 +1,104 @@
+{
+  "login": {
+    "title": "SOFTNET",
+    "subtitle": "Iniciá sesión para continuar",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@correo.com",
+    "passwordLabel": "Contraseña",
+    "submitButton": "Iniciar sesión",
+    "loadingButton": "Cargando...",
+    "footer": "Todos los derechos reservados",
+    "successMessage": "Bienvenido de nuevo",
+    "errorInvalidCredentials": "Correo o contraseña incorrectos",
+    "errorEmptyFields": "Completá todos los campos",
+    "errorInvalidEmail": "El correo no tiene un formato válido"
+  },
+  "logout": {
+    "button": "Cerrar sesión",
+    "loadingButton": "Cerrando sesión..."
+  },
+  "common": {
+    "loading": "Cargando"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Productos"
+  },
+  "products": {
+    "title": "Productos",
+    "searchPlaceholder": "Buscar por nombre o SKU...",
+    "filterCategory": "Categoría",
+    "filterStatus": "Estado",
+    "allCategories": "Todas las categorías",
+    "allStatuses": "Todos los estados",
+    "clearFilters": "Limpiar filtros",
+    "noResults": "No se encontraron productos.",
+    "status": {
+      "critico": "Crítico",
+      "bajo": "Bajo",
+      "saludable": "Saludable",
+      "exceso": "Exceso"
+    },
+    "columns": {
+      "sku": "SKU",
+      "name": "Nombre",
+      "category": "Categoría",
+      "stock": "Stock",
+      "unitCost": "Costo unitario",
+      "price": "Precio",
+      "weeklyDemand": "Demanda semanal",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "backToList": "Volver al listado",
+    "expiringSoonWarning": "Este producto vence pronto",
+    "expirationDate": "Fecha de vencimiento",
+    "coverage": "Cobertura",
+    "days": "días",
+    "noApplicable": "N/A",
+    "newProduct": "Nuevo producto",
+    "viewDetail": "Ver detalle",
+    "deleteConfirmButton": "Sí, eliminar",
+    "deleteProduct": "Eliminar producto",
+    "confirmDelete": "¿Seguro que querés eliminar este producto? Esta acción no se puede deshacer.",
+    "deleteSuccess": "Producto eliminado"
+  },
+  "pagination": {
+    "page": "Página",
+    "of": "de",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "productForm": {
+    "sku": "SKU",
+    "name": "Nombre",
+    "category": "Categoría",
+    "stock": "Stock",
+    "unitCost": "Costo unitario",
+    "price": "Precio",
+    "weeklyDemand": "Demanda semanal",
+    "expirationDate": "Fecha de vencimiento",
+    "create": "Crear producto",
+    "saveChanges": "Guardar cambios",
+    "saving": "Guardando...",
+    "successCreated": "Producto creado",
+    "successUpdated": "Producto actualizado",
+    "errorRequiredFields": "Completá los campos obligatorios",
+    "errorNegativeValues": "Los valores no pueden ser negativos",
+    "errorInvalidNumbers": "Ingresá valores numéricos válidos",
+    "sectionGeneral": "Información general",
+    "sectionInventory": "Inventario y precios",
+    "cancel": "Cancelar",
+    "errorDuplicateSku": "Ese SKU ya existe, elegí otro",
+    "errorPastDate": "La fecha de vencimiento no puede ser anterior a hoy",
+    "editTitle": "Editar producto",
+    "newTitle": "Nuevo producto"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "totalSkus": "SKUs activos",
+    "totalInventoryValue": "Valor total del inventario",
+    "expiringSoon": "Próximos a vencer",
+    "chartTitle": "Valor de inventario por categoría"
+  }
+}

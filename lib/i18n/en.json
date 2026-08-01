@@ -1,0 +1,104 @@
+{
+  "login": {
+    "title": "SOFTNET",
+    "subtitle": "Log in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "submitButton": "Log in",
+    "loadingButton": "Loading...",
+    "footer": "All rights reserved",
+    "successMessage": "Welcome back",
+    "errorInvalidCredentials": "Invalid email or password",
+    "errorEmptyFields": "Please fill in all fields",
+    "errorInvalidEmail": "Invalid email format"
+  },
+  "logout": {
+    "button": "Log out",
+    "loadingButton": "Logging out..."
+  },
+  "common": {
+    "loading": "Loading"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Products"
+  },
+  "products": {
+    "title": "Products",
+    "searchPlaceholder": "Search by name or SKU...",
+    "filterCategory": "Category",
+    "filterStatus": "Status",
+    "allCategories": "All categories",
+    "allStatuses": "All statuses",
+    "clearFilters": "Clear filters",
+    "noResults": "No products found.",
+    "status": {
+      "critico": "Critical",
+      "bajo": "Low",
+      "saludable": "Healthy",
+      "exceso": "Excess"
+    },
+    "columns": {
+      "sku": "SKU",
+      "name": "Name",
+      "category": "Category",
+      "stock": "Stock",
+      "unitCost": "Unit cost",
+      "price": "Price",
+      "weeklyDemand": "Weekly demand",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "backToList": "Back to list",
+    "expiringSoonWarning": "This product expires soon",
+    "expirationDate": "Expiration date",
+    "coverage": "Coverage",
+    "days": "days",
+    "noApplicable": "N/A",
+    "newProduct": "New product",
+    "viewDetail": "View details",
+    "deleteProduct": "Delete product",
+    "confirmDelete": "Are you sure you want to delete this product? This action cannot be undone.",
+    "deleteSuccess": "Product deleted",
+    "deleteConfirmButton": "Yes, delete"
+  },
+  "pagination": {
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "productForm": {
+    "sku": "SKU",
+    "name": "Name",
+    "category": "Category",
+    "stock": "Stock",
+    "unitCost": "Unit cost",
+    "price": "Price",
+    "weeklyDemand": "Weekly demand",
+    "expirationDate": "Expiration date",
+    "create": "Create product",
+    "saveChanges": "Save changes",
+    "saving": "Saving...",
+    "successCreated": "Product created",
+    "successUpdated": "Product updated",
+    "errorRequiredFields": "Complete the required fields",
+    "errorNegativeValues": "Values cannot be negative",
+    "errorInvalidNumbers": "Enter valid numeric values",
+    "sectionGeneral": "General information",
+    "sectionInventory": "Inventory and pricing",
+    "cancel": "Cancel",
+    "errorDuplicateSku": "SKU already exists, choose another one",
+    "errorPastDate": "The expiration date cannot be earlier than today",
+    "editTitle": "Edit product",
+    "newTitle": "New product"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "totalSkus": "actives SKUs",
+    "totalInventoryValue": "Total inventory value",
+    "expiringSoon": "Expiring soon",
+    "chartTitle": "Inventory value by category"
+  }
+}
