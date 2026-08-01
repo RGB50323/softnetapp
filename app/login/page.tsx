@@ -12,6 +12,9 @@ export default function LoginPage() {
   const { t } = useLanguage();
   const router = useRouter();
 
+  /**
+   * Form variables to login with flags to handle page status like errors or loading state
+   */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,6 +25,9 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
+    /**
+     * Validations applied into the login form
+     */
     if (!email || !password) {
       toast.error(t("login.errorEmptyFields"));
       setLoading(false);

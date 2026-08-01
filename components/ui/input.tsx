@@ -11,6 +11,8 @@ interface InputModel {
   id: string;
   placeholder?: string;
   required?: boolean;
+  disabled?: boolean;
+  min?: string;
 }
 
 export function Input({
@@ -21,6 +23,8 @@ export function Input({
   id,
   placeholder,
   required,
+  disabled,
+  min,
 }: InputModel) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
@@ -39,7 +43,9 @@ export function Input({
           onChange={onChange}
           placeholder={placeholder}
           required={required}
-          className="w-full border border-slate-300 rounded-lg px-3 py-2 pr-10 text-slate-900 focus:outline-none"
+          disabled={disabled}
+          min={min}
+          className="w-full border border-slate-300 rounded-lg px-3 py-2 pr-10 text-slate-900 focus:outline-none disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
         />
         {isPassword && (
           <button
