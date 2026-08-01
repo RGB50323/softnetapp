@@ -1,0 +1,210 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import {
+  Product,
+  getProductStatus,
+  ProductStatus,
+} from "../../../lib/models/products";
+import { SearchBar } from "@/components/ui/searchBar";
+import { Dropdown } from "@/components/ui/dropdown";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n/language-context";
+import { StatusBadge } from "@/components/ui/badge";
+
+interface ProductsTableProps {
+  initialProducts: Product[];
+}
+
+export function ProductsTable({ initialProducts }: ProductsTableProps) {
+  const { t } = useLanguage();
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<ProductStatus | "all">(
+    "all",
+  );
+
+  const statusLabels: Record<ProductStatus, string> = {
+    critico: t("products.status.critico"),
+    bajo: t("products.status.bajo"),
+    saludable: t("products.status.saludable"),
+    exceso: t("products.status.exceso"),
+  };
+
+  const categories = useMemo(() => {
+    const unique = new Set(initialProducts.map((p) => p.category));
+    return Array.from(unique).sort();
+  }, [initialProducts]);
+
+  const filteredProducts = useMemo(() => {
+    return initialProducts.filter((product) => {
+      const matchesSearch =
+        product.name.toLowerCase().includes(search.toLowerCase()) ||
+        product.sku.toLowerCase().includes(search.toLowerCase());
+
+      const matchesCategory =
+        categoryFilter === "all" || product.category === categoryFilter;
+
+      const status = getProductStatus(product.stock, product.weekly_demand);
+      const matchesStatus = statusFilter === "all" || status === statusFilter;
+
+      return matchesSearch && matchesCategory && matchesStatus;
+    });
+  }, [initialProducts, search, categoryFilter, statusFilter]);
+
+  const hasActiveFilters =
+    search !== "" || categoryFilter !== "all" || statusFilter !== "all";
+
+  const handleClearFilters = () => {
+    setSearch("");
+    setCategoryFilter("all");
+    setStatusFilter("all");
+  };
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <SearchBar
+            value={search}
+            onChange={setSearch}
+            placeholder={t("products.searchPlaceholder")}
+          />
+
+          <Dropdown
+            label={
+              categoryFilter === "all"
+                ? t("products.filterCategory")
+                : categoryFilter
+            }
+            active={categoryFilter !== "all"}
+            value={categoryFilter}
+            onChange={setCategoryFilter}
+            options={[
+              { value: "all", label: t("products.allCategories") },
+              ...categories.map((c) => ({ value: c, label: c })),
+            ]}
+          />
+
+          <Dropdown
+            label={
+              statusFilter === "all"
+                ? t("products.filterStatus")
+                : statusLabels[statusFilter as ProductStatus]
+            }
+            active={statusFilter !== "all"}
+            value={statusFilter}
+            onChange={(v) => setStatusFilter(v as ProductStatus | "all")}
+            options={[
+              { value: "all", label: t("products.allStatuses") },
+              {
+                value: "critico",
+                label: statusLabels.critico,
+                dot: "bg-red-500",
+              },
+              { value: "bajo", label: statusLabels.bajo, dot: "bg-orange-500" },
+              {
+                value: "saludable",
+                label: statusLabels.saludable,
+                dot: "bg-green-500",
+              },
+              {
+                value: "exceso",
+                label: statusLabels.exceso,
+                dot: "bg-blue-500",
+              },
+            ]}
+          />
+        </div>
+
+        <Button
+          type="button"
+          variant="secondary"
+          disabled={!hasActiveFilters}
+          onClick={handleClearFilters}
+          className="text-sm py-2.5"
+        >
+          {t("products.clearFilters")}
+        </Button>
+      </div>
+
+      <div className="overflow-x-auto border border-slate-200 rounded-xl">
+        <table className="min-w-full text-sm">
+          <thead className="bg-slate-50 text-slate-700">
+            <tr>
+              <th className="text-left px-4 py-3 font-semibold">
+                {t("products.columns.sku")}
+              </th>
+              <th className="text-left px-4 py-3 font-semibold">
+                {t("products.columns.name")}
+              </th>
+              <th className="text-left px-4 py-3 font-semibold">
+                {t("products.columns.category")}
+              </th>
+              <th className="text-right px-4 py-3 font-semibold">
+                {t("products.columns.stock")}
+              </th>
+              <th className="text-right px-4 py-3 font-semibold">
+                {t("products.columns.unitCost")}
+              </th>
+              <th className="text-right px-4 py-3 font-semibold">
+                {t("products.columns.price")}
+              </th>
+              <th className="text-right px-4 py-3 font-semibold">
+                {t("products.columns.weeklyDemand")}
+              </th>
+              <th className="text-left px-4 py-3 font-semibold">
+                {t("products.columns.status")}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredProducts.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={8}
+                  className="text-center px-4 py-6 text-slate-500"
+                >
+                  {t("products.noResults")}
+                </td>
+              </tr>
+            ) : (
+              filteredProducts.map((product) => {
+                const status = getProductStatus(
+                  product.stock,
+                  product.weekly_demand,
+                );
+                return (
+                  <tr
+                    key={product.id}
+                    className="border-t border-slate-100 hover:bg-slate-50 cursor-pointer"
+                    onClick={() =>
+                      (window.location.href = `/products/${product.sku}`)
+                    }
+                  >
+                    <td className="px-4 py-3 font-medium">{product.sku}</td>
+                    <td className="px-4 py-3">{product.name}</td>
+                    <td className="px-4 py-3">{product.category}</td>
+                    <td className="px-4 py-3 text-right">{product.stock}</td>
+                    <td className="px-4 py-3 text-right">
+                      ${product.unit_cost.toFixed(2)}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      ${product.price.toFixed(2)}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {product.weekly_demand}
+                    </td>
+                    <td className="px-4 py-3">
+                      <StatusBadge status={status} label={statusLabels[status]} />
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

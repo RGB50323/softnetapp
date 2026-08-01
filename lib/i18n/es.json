@@ -19,5 +19,35 @@
   },
   "common": {
     "loading": "Cargando"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Productos"
+  },
+  "products": {
+    "title": "Productos",
+    "searchPlaceholder": "Buscar por nombre o SKU...",
+    "filterCategory": "Categoría",
+    "filterStatus": "Estado",
+    "allCategories": "Todas las categorías",
+    "allStatuses": "Todos los estados",
+    "clearFilters": "Limpiar filtros",
+    "noResults": "No se encontraron productos.",
+    "status": {
+      "critico": "Crítico",
+      "bajo": "Bajo",
+      "saludable": "Saludable",
+      "exceso": "Exceso"
+    },
+    "columns": {
+      "sku": "SKU",
+      "name": "Nombre",
+      "category": "Categoría",
+      "stock": "Stock",
+      "unitCost": "Costo unitario",
+      "price": "Precio",
+      "weeklyDemand": "Demanda semanal",
+      "status": "Estado"
+    }
   }
 }
