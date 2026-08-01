@@ -6,6 +6,9 @@ import { ProductsTitle } from "./products-title";
 export default async function ProductsPage() {
   const supabase = await createClient();
 
+  /**
+   * Load products from supabase ordered by name
+   */
   const { data: products, error } = await supabase
     .from("products")
     .select("*")

@@ -1,10 +1,10 @@
 /**
- * Posibles valores de estado
+ * Possible status values
  */
 export type ProductStatus = "critico" | "bajo" | "saludable" | "exceso";
 
 /**
- * Modelo del producto acorde al asignado
+ * Product model matching the assigned schema
  */
 export interface Product {
   id: string;
@@ -19,10 +19,10 @@ export interface Product {
 }
 
 /**
- * Calcula el estado del producto mediante las variables de stock y demanda semanal
- * @param stock cantidad de producto
- * @param weeklyDemand demanda semanal del producto
- * @returns el valor del estado
+ * Calculates the product's status based on stock and weekly demand
+ * @param stock current stock quantity
+ * @param weeklyDemand estimated weekly demand
+ * @returns the resulting status value
  */
 export function getProductStatus(
   stock: number,
@@ -36,7 +36,7 @@ export function getProductStatus(
 }
 
 /**
- * Labels de cada posible estado que puede adquirir un producto
+ * Display labels for each possible product status
  */
 export const STATUS_LABELS: Record<ProductStatus, string> = {
   critico: "Crítico",
@@ -46,7 +46,7 @@ export const STATUS_LABELS: Record<ProductStatus, string> = {
 };
 
 /**
- * Colores asignados en forma de badge a cada estado
+ * Badge colors assigned to each status
  */
 export const STATUS_COLORS: Record<ProductStatus, string> = {
   critico: "bg-red-100 text-red-700 border border-red-300",
@@ -56,8 +56,8 @@ export const STATUS_COLORS: Record<ProductStatus, string> = {
 };
 
 /**
- * Calcula la cobertura en días: (stock / weekly_demand) * 7.
- * Si weekly_demand es 0, retorna null (cobertura indefinida/infinita).
+ * Calculates coverage in days: (stock / weekly_demand) * 7.
+ * If weekly_demand is 0, returns null (undefined/infinite coverage).
  */
 export function getCoverageDays(
   stock: number,
@@ -68,7 +68,7 @@ export function getCoverageDays(
 }
 
 /**
- * Verifica si un producto está próximo a vencer (30 días).
+ * Checks whether a product is close to expiring (90 days).
  */
 export function isExpiringSoon(expirationDate: string | null): boolean {
   if (!expirationDate) return false;

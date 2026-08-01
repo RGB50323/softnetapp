@@ -49,5 +49,11 @@
       "weeklyDemand": "Weekly demand",
       "status": "Status"
     }
+  },
+  "pagination": {
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next"
   }
 }

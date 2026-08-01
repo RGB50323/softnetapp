@@ -24,6 +24,7 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
     "all",
   );
 
+  // Translated labels for each status, used both in the dropdown options and the table badges
   const statusLabels: Record<ProductStatus, string> = {
     critico: t("products.status.critico"),
     bajo: t("products.status.bajo"),
@@ -31,11 +32,14 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
     exceso: t("products.status.exceso"),
   };
 
+  // Unique list of categories derived from the data, used to populate the category dropdown
   const categories = useMemo(() => {
     const unique = new Set(initialProducts.map((p) => p.category));
     return Array.from(unique).sort();
   }, [initialProducts]);
 
+  // Client-side filtering: search text (name/SKU) + category + computed status.
+  // All filtering happens in memory since the full product list is already loaded.
   const filteredProducts = useMemo(() => {
     return initialProducts.filter((product) => {
       const matchesSearch =
@@ -52,6 +56,19 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
     });
   }, [initialProducts, search, categoryFilter, statusFilter]);
 
+  const ITEMS_PER_PAGE = 8;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Total number of pages based on the FILTERED results, not the full list
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+
+  // Slice of filteredProducts corresponding to the current page only
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filteredProducts.slice(startIndex, endIndex);
+  }, [filteredProducts, currentPage]);
+
   const hasActiveFilters =
     search !== "" || categoryFilter !== "all" || statusFilter !== "all";
 
@@ -59,6 +76,7 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
     setSearch("");
     setCategoryFilter("all");
     setStatusFilter("all");
+    setCurrentPage(1);
   };
 
   return (
@@ -67,7 +85,10 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
         <div className="flex flex-wrap items-center gap-3">
           <SearchBar
             value={search}
-            onChange={setSearch}
+            onChange={(value) => {
+              setSearch(value);
+              setCurrentPage(1);
+            }}
             placeholder={t("products.searchPlaceholder")}
           />
 
@@ -79,7 +100,10 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
             }
             active={categoryFilter !== "all"}
             value={categoryFilter}
-            onChange={setCategoryFilter}
+            onChange={(value) => {
+              setCategoryFilter(value);
+              setCurrentPage(1);
+            }}
             options={[
               { value: "all", label: t("products.allCategories") },
               ...categories.map((c) => ({ value: c, label: c })),
@@ -94,7 +118,10 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
             }
             active={statusFilter !== "all"}
             value={statusFilter}
-            onChange={(v) => setStatusFilter(v as ProductStatus | "all")}
+            onChange={(value) => {
+              setStatusFilter(value as ProductStatus | "all");
+              setCurrentPage(1);
+            }}
             options={[
               { value: "all", label: t("products.allStatuses") },
               {
@@ -169,7 +196,7 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
                 </td>
               </tr>
             ) : (
-              filteredProducts.map((product) => {
+              paginatedProducts.map((product) => {
                 const status = getProductStatus(
                   product.stock,
                   product.weekly_demand,
@@ -196,7 +223,10 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
                       {product.weekly_demand}
                     </td>
                     <td className="px-4 py-3">
-                      <StatusBadge status={status} label={statusLabels[status]} />
+                      <StatusBadge
+                        status={status}
+                        label={statusLabels[status]}
+                      />
                     </td>
                   </tr>
                 );
@@ -205,6 +235,36 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination controls, only shown when there's more than one page */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-slate-500">
+            {t("pagination.page")} {currentPage} {t("pagination.of")}{" "}
+            {totalPages}
+          </p>
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => p - 1)}
+              className="text-sm py-2"
+            >
+              {t("pagination.previous")}
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => p + 1)}
+              className="text-sm py-2"
+            >
+              {t("pagination.next")}
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
