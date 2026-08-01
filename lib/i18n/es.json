@@ -90,6 +90,15 @@
     "sectionInventory": "Inventario y precios",
     "cancel": "Cancelar",
     "errorDuplicateSku": "Ese SKU ya existe, elegí otro",
-    "errorPastDate": "La fecha de vencimiento no puede ser anterior a hoy"
+    "errorPastDate": "La fecha de vencimiento no puede ser anterior a hoy",
+    "editTitle": "Editar producto",
+    "newTitle": "Nuevo producto"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "totalSkus": "SKUs activos",
+    "totalInventoryValue": "Valor total del inventario",
+    "expiringSoon": "Próximos a vencer",
+    "chartTitle": "Valor de inventario por categoría"
   }
 }

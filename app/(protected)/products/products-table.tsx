@@ -5,7 +5,7 @@ import {
   Product,
   getProductStatus,
   ProductStatus,
-} from "../../../lib/models/products";
+} from "@/lib/models/products";
 import { SearchBar } from "@/components/ui/searchBar";
 import { Dropdown } from "@/components/ui/dropdown";
 import { Button } from "@/components/ui/button";
@@ -88,6 +88,7 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
     setCurrentPage(1);
   };
 
+  // Deletes the product currently targeted by skuToDelete, then refreshes the list
   const handleConfirmDelete = async () => {
     if (!skuToDelete) return;
     setDeleting(true);
@@ -222,7 +223,7 @@ export function ProductsTable({ initialProducts }: ProductsTableProps) {
             {filteredProducts.length === 0 ? (
               <tr>
                 <td
-                  colSpan={8}
+                  colSpan={9}
                   className="text-center px-4 py-6 text-slate-500"
                 >
                   {t("products.noResults")}

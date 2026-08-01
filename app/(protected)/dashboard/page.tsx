@@ -1,9 +1,20 @@
-export default function Dashboard() {
+import { createClient } from "@/lib/supabase/server";
+import { Product } from "@/lib/models/products";
+import { DashboardClient } from "./dashboard-client";
+
+export default async function Dashboard() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: products } = await supabase.from("products").select("*");
+
   return (
-    <div className="min-h-screen bg-white text-black p-8">
-      <div className="flex justify-between items-center ">
-        <h1 className="text-2xl font-bold">Bienvenido</h1>
-      </div>
-    </div>
+    <DashboardClient
+      email={user?.email ?? ""}
+      products={(products as Product[]) ?? []}
+    />
   );
 }

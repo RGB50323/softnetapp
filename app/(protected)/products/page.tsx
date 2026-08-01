@@ -2,8 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import { Product } from "@/lib/models/products";
 import { ProductsTable } from "./products-table";
 import { ProductsTitle } from "./products-title";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export default async function ProductsPage() {
   const supabase = await createClient();
